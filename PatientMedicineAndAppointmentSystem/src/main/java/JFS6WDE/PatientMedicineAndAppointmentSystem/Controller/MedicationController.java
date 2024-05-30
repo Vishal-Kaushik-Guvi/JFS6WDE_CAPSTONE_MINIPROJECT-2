@@ -1,5 +1,5 @@
 package JFS6WDE.PatientMedicineAndAppointmentSystem.Controller;
 
-public class PatientController {
+public class MedicationController {
 
 }

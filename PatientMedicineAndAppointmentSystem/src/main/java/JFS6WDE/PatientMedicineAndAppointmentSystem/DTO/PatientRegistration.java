@@ -4,15 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-public class UserRegistration {
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRegistrationDto {
+public class PatientRegistration {
 
-    private String firstName;
-    private  String lastName;
-    private String email;
-    private  String password;
-}
+    private String patientName;
+
+    private String contactInfo;
+
+    private String password;
 }

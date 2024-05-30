@@ -1,6 +1,13 @@
 package JFS6WDE.PatientMedicineAndAppointmentSystem.Service;
 
-public interface MedicationService {
+import java.util.List;
 
+import JFS6WDE.PatientMedicineAndAppointmentSystem.Entities.Medication;
+
+public interface MedicationService {
     
+    Medication saveMedication(Medication medication);
+    void deleteMedication(Long id);
+    Medication getMedicationById(Long id);
+    List<Medication> getAllMedications();    
 }

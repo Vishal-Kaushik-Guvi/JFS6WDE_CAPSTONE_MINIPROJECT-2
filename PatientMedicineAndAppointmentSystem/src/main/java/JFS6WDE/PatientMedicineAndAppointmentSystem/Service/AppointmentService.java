@@ -5,6 +5,9 @@ import java.util.List;
 import JFS6WDE.PatientMedicineAndAppointmentSystem.Entities.AppointmentBooking;
 
 public interface AppointmentService {
-  AppointmentBooking createAppointmentBooking(AppointmentBooking booking);
-  List<AppointmentBooking> findAppointmentBookings();
+  AppointmentBooking saveAppointmentBooking(AppointmentBooking appointmentBooking);
+  void deleteAppointmentBooking(Long id);
+  AppointmentBooking getAppointmentBookingById(Long id);
+  List<AppointmentBooking> getAllAppointmentBookings();
+
 }

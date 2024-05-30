@@ -10,17 +10,27 @@ import JFS6WDE.PatientMedicineAndAppointmentSystem.Repository.AppointmentReposit
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService{
-     
+    
     @Autowired
     private AppointmentRepository appointmentRepository;
 
     @Override
-    public AppointmentBooking createAppointmentBooking(AppointmentBooking booking) {
-        return appointmentRepository.save(booking);
+    public AppointmentBooking saveAppointmentBooking(AppointmentBooking appointmentBooking) {
+        return appointmentRepository.save(appointmentBooking);
     }
 
     @Override
-    public List<AppointmentBooking> findAppointmentBookings() {
+    public void deleteAppointmentBooking(Long id) {
+        appointmentRepository.deleteById(id);
+    }
+
+    @Override
+    public AppointmentBooking getAppointmentBookingById(Long id) {
+        return appointmentRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<AppointmentBooking> getAllAppointmentBookings() {
         return appointmentRepository.findAll();
     }
 

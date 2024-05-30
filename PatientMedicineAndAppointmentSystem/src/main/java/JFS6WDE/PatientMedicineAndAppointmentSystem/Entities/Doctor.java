@@ -22,10 +22,10 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "Doctor_Name", nullable = false)
+    @Column(name = "Doctor_Name")
     private String name;
 
-    @Column(name = "Specialty", nullable = false)
+    @Column(name = "Specialty")
     private String specialty;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
