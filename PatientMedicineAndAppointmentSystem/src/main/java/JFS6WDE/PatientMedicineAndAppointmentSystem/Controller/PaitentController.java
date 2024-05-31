@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import JFS6WDE.PatientMedicineAndAppointmentSystem.Entities.PatientInfo;
 import JFS6WDE.PatientMedicineAndAppointmentSystem.Service.PatientServiceImpl;
@@ -28,7 +26,7 @@ public class PaitentController {
     @GetMapping("/patients/{id}/edit")
     public String showEditPatientForm(@PathVariable Long id, Model model) {
         try {
-            PatientInfo patientInfo = patientService.getPatientById(id);
+            PatientInfo patientInfo = patientService.getPatientInfoById(id);
             model.addAttribute("patientInfo", patientInfo);
             return "edit-patient";
         } catch (ResourceNotFoundException ex) {

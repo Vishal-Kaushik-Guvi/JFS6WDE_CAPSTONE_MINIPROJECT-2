@@ -26,7 +26,7 @@ public class PatientInfo {
     private Long id;
 
     @Column(name = "Patient_Name")
-    private String patientName;
+    private String patientname;
 
     @Column(name = "Contact_Info")
     private String contactInfo;
@@ -45,7 +45,7 @@ public class PatientInfo {
     private PatientUser patientUser;
 
     public PatientInfo(String patientName, String contactInfo) {
-        this.patientName = patientName;
+        this.patientname = patientName;
         this.contactInfo = contactInfo;
     }
     

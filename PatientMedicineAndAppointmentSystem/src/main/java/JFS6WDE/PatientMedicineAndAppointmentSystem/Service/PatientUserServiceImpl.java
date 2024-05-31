@@ -1,5 +1,8 @@
 package JFS6WDE.PatientMedicineAndAppointmentSystem.Service;
 
+import java.util.Collections;
+
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,19 +11,15 @@ import org.springframework.stereotype.Service;
 
 import JFS6WDE.PatientMedicineAndAppointmentSystem.DTO.PatientRegistration;
 import JFS6WDE.PatientMedicineAndAppointmentSystem.DTO.PatientUser;
-import JFS6WDE.PatientMedicineAndAppointmentSystem.DTO.Role;
 import JFS6WDE.PatientMedicineAndAppointmentSystem.Entities.PatientInfo;
 import JFS6WDE.PatientMedicineAndAppointmentSystem.Repository.PatientUserRepository;
+import ch.qos.logback.classic.Logger;
 import JFS6WDE.PatientMedicineAndAppointmentSystem.Repository.PatientRepository;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.stream.Collectors;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Service
 public class PatientUserServiceImpl implements PatientUserService {
+
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(PatientUserServiceImpl.class);
 
     @Autowired
     private PatientUserRepository userRepo;
@@ -34,13 +33,12 @@ public class PatientUserServiceImpl implements PatientUserService {
     @Override
     public PatientUser save(PatientRegistration registrationDto) {
         PatientUser user = new PatientUser(
-                registrationDto.getPatientName(),
+                registrationDto.getPatientname(),
                 registrationDto.getContactInfo(),
-                passwordEncoder.encode(registrationDto.getPassword()),
-                Arrays.asList(new Role("ROLE_USER")));
+                passwordEncoder.encode(registrationDto.getPassword()));
 
         PatientInfo patientInfo = new PatientInfo(
-                registrationDto.getPatientName(),
+                registrationDto.getPatientname(),
                 registrationDto.getContactInfo());
 
         user.setPatientInfo(patientInfo);
@@ -52,22 +50,18 @@ public class PatientUserServiceImpl implements PatientUserService {
         return user;
     }
 
-
     @Override
-    public UserDetails loadUserByUsername(String patientName) throws UsernameNotFoundException {
-        PatientUser user = userRepo.findByPatientName(patientName);
+    public UserDetails loadUserByUsername(String patientname) throws UsernameNotFoundException {
+        logger.debug("Attempting to load user by username: {}", patientname);
+        PatientUser user = userRepo.findByPatientname(patientname);
         if (user == null) {
-            throw new UsernameNotFoundException("Invalid username or password");
+            logger.error("User not found: {}", patientname);
+            throw new UsernameNotFoundException("User does not exist!");
         }
+        logger.debug("User found: {}", user);
         return new org.springframework.security.core.userdetails.User(
-                user.getPatientName(),
+                user.getPatientname(),
                 user.getPassword(),
-                mapRolesAuthorities(user.getRoles()));
-    }
-
-    private Collection<? extends GrantedAuthority> mapRolesAuthorities(Collection<Role> roles) {
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole()))
-                .collect(Collectors.toList());
+                Collections.emptyList());
     }
 }

@@ -28,7 +28,8 @@ public class RegistrationController {
     // Method to handle form submission
     @PostMapping("/registration")
     public String registerUserAccount(@ModelAttribute("user") PatientRegistration registrationDto) {
-        System.out.println("password " + registrationDto.getPassword());
+        System.out.println("password :" + registrationDto.getPassword());
+        System.out.println("Patient Name :" +registrationDto.getPatientname());
         // Call save to register the user
         userService.save(registrationDto);
         // Redirect to registration page with success message

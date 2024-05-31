@@ -45,7 +45,7 @@ public class PatientServiceImpl implements PatientService {
             PatientInfo existingPatient = existingPatientOptional.get();
             
             // Update the fields of the existing patient object
-            existingPatient.setPatientName(updatedPatientInfo.getPatientName());
+            existingPatient.setPatientname(updatedPatientInfo.getPatientname());
             existingPatient.setContactInfo(updatedPatientInfo.getContactInfo());
             existingPatient.setMedicalHistory(updatedPatientInfo.getMedicalHistory());
             

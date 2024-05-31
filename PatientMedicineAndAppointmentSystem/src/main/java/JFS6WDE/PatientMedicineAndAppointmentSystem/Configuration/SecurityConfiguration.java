@@ -16,53 +16,47 @@ import JFS6WDE.PatientMedicineAndAppointmentSystem.Service.PatientUserService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-    //Inject UserService
 
     @Lazy
     @Autowired
     private PatientUserService userService;
 
-    //bean-bcryptpassword,DaoAuthentication,Security Filter Chain
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return  new BCryptPasswordEncoder();
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
-    //create DaoAuthentication Provider
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider auth=new DaoAuthenticationProvider();
-        auth.setUserDetailsService(userService);
-        auth.setPasswordEncoder(passwordEncoder());
-        return auth;
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        //implement
-        http.csrf().disable()
-                .cors().disable()
-                .authorizeHttpRequests().requestMatchers(
-                        "/registration**",
-                                "js/**","/css/**","/img/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")//redirect to login page
-                .permitAll()
-                .and()
-                .authenticationProvider(authenticationProvider());
+        http.csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(authorize -> authorize
+                    .requestMatchers("/h2-console/**", "/registration**", "/js/**", "/css/**", "/img/**").permitAll()
+                    .requestMatchers("/login**").permitAll()
+                    .anyRequest().authenticated())
+            .formLogin(formLogin -> formLogin
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/patientinfo", true)
+                    .permitAll())
+            .logout(logout -> logout
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll())
+            .authenticationProvider(authenticationProvider());
 
+        // Enable frames for H2 console
+        http.headers(headers -> headers.frameOptions().sameOrigin());
 
         return http.build();
     }
+
 }

@@ -5,71 +5,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<nav class="navbar navbar-dark bg-dark navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <h1 style="color: white">Registration</h1>
-        </div>
-    </div>
-</nav>
-
-<br />
-<br />
-
 <div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div th:if="${param.success}">
-                <div class="alert alert-info">
-                    You have successfully registered to our website.
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center">Patient Registration</h4>
+                </div>
+                <div class="card-body">
+                    <div th:if="${param.success}">
+                        <div class="alert alert-info">
+                            You have successfully registered to our website.
+                        </div>
+                    </div>
+                    <form th:action="@{/registration}" method="post" th:object="${user}">
+                        <div class="form-group">
+                            <label for="patientname">Patient Name</label>
+                            <input type="text" class="form-control" id="patientname" th:field="*{patientname}" required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactInfo">Contact Details</label>
+                            <input type="text" class="form-control" id="contactInfo" th:field="*{contactInfo}" required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" th:field="*{password}" required autocomplete="off">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <span>Already registered? <a th:href="@{/login}">Login here</a></span>
+                    </div>
                 </div>
             </div>
-
-            <h2>Registration</h2>
-
-            <form th:action="@{/registration}" method="post" th:object="${user}">
-                <div class="form-group">
-                    <label class="control-label" for="patientName"> Patient Name </label>
-                    <input
-                            id="patientName"
-                            class="form-control"
-                            th:field="*{patientName}"
-                            required
-                            autocomplete="off"
-                    />
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label" for="contactInfo"> Contact Details </label>
-                    <input
-                            id="contactInfo"
-                            class="form-control"
-                            th:field="*{contactInfo}"
-                            required
-                            autocomplete="off"
-                    />
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label" for="password"> Password </label>
-                    <input
-                            id="password"
-                            class="form-control"
-                            type="password"
-                            th:field="*{password}"
-                            required
-                            autocomplete="off"
-                    />
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Register</button>
-                    <span>Already registered? <a href="login" th:href="@{/login}">Login here</a></span>
-                </div>
-            </form>
         </div>
     </div>
 </div>

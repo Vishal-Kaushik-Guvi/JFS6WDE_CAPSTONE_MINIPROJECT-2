@@ -26,7 +26,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 
     @Override
     public AppointmentBooking getAppointmentBookingById(Long id) {
-        return appointmentRepository.findById(id).orElse(null);
+        return appointmentRepository.findById(id).get();
     }
 
     @Override
