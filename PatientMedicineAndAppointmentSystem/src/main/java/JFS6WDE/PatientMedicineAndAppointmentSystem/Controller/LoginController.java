@@ -8,7 +8,7 @@ public class LoginController {
     //handler for route login
     @GetMapping("/login")
     public String login(){
-        return "login";
+        return "/login";
     }
 }
 

@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import JFS6WDE.PatientMedicineAndAppointmentSystem.Service.PatientUserService;
+import JFS6WDE.PatientMedicineAndAppointmentSystem.Service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -18,10 +18,10 @@ public class SecurityConfiguration {
 
     @Lazy
     @Autowired
-    private PatientUserService userService;
+    private UserService userService;
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public static BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -36,21 +36,23 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers("/h2-console/**", "/registration**", "/js/**", "/css/**", "/img/**").permitAll()
-                    .requestMatchers("/login**").permitAll()
-                    .anyRequest().authenticated())
-            .formLogin(formLogin -> formLogin
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/patientinfo", true)
-                    .permitAll())
-            .logout(logout -> logout
-                    .invalidateHttpSession(true)
-                    .clearAuthentication(true)
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/login?logout")
-                    .permitAll())
-            .authenticationProvider(authenticationProvider());
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/h2-console**", "/registration**", "/js/**", "/css/**", "/img/**")
+                        .permitAll()
+                        .requestMatchers("/login**").permitAll()
+                        .requestMatchers("/users").permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/patientinfo", true)
+                        .permitAll())
+                .logout(logout -> logout
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll())
+                .authenticationProvider(authenticationProvider());
 
         // Enable frames for H2 console
         http.headers(headers -> headers.frameOptions().sameOrigin());

@@ -2,7 +2,7 @@ package JFS6WDE.PatientMedicineAndAppointmentSystem.Entities;
 
 import java.util.List;
 
-import JFS6WDE.PatientMedicineAndAppointmentSystem.DTO.PatientUser;
+import JFS6WDE.PatientMedicineAndAppointmentSystem.DTO.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,7 +42,7 @@ public class PatientInfo {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private PatientUser patientUser;
+    private User patientUser;
 
     public PatientInfo(String patientName, String contactinfo) {
         this.patientname = patientName;

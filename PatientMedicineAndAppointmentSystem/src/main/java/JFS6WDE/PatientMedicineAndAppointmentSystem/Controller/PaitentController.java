@@ -18,10 +18,15 @@ public class PaitentController {
     @Autowired
     private PatientServiceImpl patientService;
 
-    @GetMapping("/patientInfo")
+    @GetMapping("/index")
+    public String showHome(){
+        return "index";
+    }
+
+    @GetMapping("/allPatient")
     public String showPatientInfo(Model model) {
         model.addAttribute("patients", patientService.getAllPatients());
-        return "patientinfo";
+        return "index";
     }
     
     @GetMapping("/patients/{id}/edit")

@@ -14,18 +14,18 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import JFS6WDE.PatientMedicineAndAppointmentSystem.DTO.PatientRegistration;
-import JFS6WDE.PatientMedicineAndAppointmentSystem.DTO.PatientUser;
+import JFS6WDE.PatientMedicineAndAppointmentSystem.DTO.Registration;
+import JFS6WDE.PatientMedicineAndAppointmentSystem.DTO.User;
 import JFS6WDE.PatientMedicineAndAppointmentSystem.Entities.PatientInfo;
-import JFS6WDE.PatientMedicineAndAppointmentSystem.Repository.PatientUserRepository;
-import JFS6WDE.PatientMedicineAndAppointmentSystem.Service.PatientUserServiceImpl;
+import JFS6WDE.PatientMedicineAndAppointmentSystem.Service.UserServiceImpl;
 import JFS6WDE.PatientMedicineAndAppointmentSystem.Repository.PatientRepository;
+import JFS6WDE.PatientMedicineAndAppointmentSystem.Repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class logintest {
 
     @Mock
-    private PatientUserRepository userRepo;
+    private UserRepository userRepo;
 
     @Mock
     private PatientRepository infoRepo;
@@ -34,13 +34,13 @@ public class logintest {
     private BCryptPasswordEncoder passwordEncoder;
 
     @InjectMocks
-    private PatientUserServiceImpl userService;
+    private UserServiceImpl userService;
 
-    private PatientRegistration registrationDto;
+    private Registration registrationDto;
 
     @BeforeEach
     public void setUp() {
-        registrationDto = new PatientRegistration();
+        registrationDto = new Registration();
         registrationDto.setPatientname("John Doe");
         registrationDto.setContactinfo("1234567890");
         registrationDto.setEmail("john@example.com");
@@ -53,11 +53,11 @@ public class logintest {
         when(passwordEncoder.encode(any(CharSequence.class))).thenReturn("encodedPassword");
 
         // Mock repository save methods
-        when(userRepo.save(any(PatientUser.class))).thenAnswer(i -> i.getArguments()[0]);
+        when(userRepo.save(any(User.class))).thenAnswer(i -> i.getArguments()[0]);
         when(infoRepo.save(any(PatientInfo.class))).thenAnswer(i -> i.getArguments()[0]);
 
         // Call save method
-        PatientUser savedUser = userService.save(registrationDto);
+        User savedUser = userService.save(registrationDto);
 
         // Assertions
         assertNotNull(savedUser);
@@ -68,7 +68,7 @@ public class logintest {
         assertEquals("encodedPassword", savedUser.getPassword());
 
         // Verify that save methods were called
-        verify(userRepo).save(any(PatientUser.class));
+        verify(userRepo).save(any(User.class));
         verify(infoRepo).save(any(PatientInfo.class));
     }
 }
