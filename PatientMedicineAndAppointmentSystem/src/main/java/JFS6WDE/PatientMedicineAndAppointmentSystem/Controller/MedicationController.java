@@ -6,8 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import JFS6WDE.PatientMedicineAndAppointmentSystem.Entities.Medication;
-import JFS6WDE.PatientMedicineAndAppointmentSystem.Repository.MedicationRepository;
-import JFS6WDE.PatientMedicineAndAppointmentSystem.Repository.PatientRepository;
 import JFS6WDE.PatientMedicineAndAppointmentSystem.Service.MedicationServiceImplt;
 
 @Controller
@@ -32,21 +30,16 @@ public class MedicationController {
         return "redirect:/medications";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/updated/{id}")
     public String editMedication(@PathVariable Long id, Model model) {
-        model.addAttribute("medicationToEdit", medicationService.getMedicationById(id));
-        model.addAttribute("medications", medicationService.getAllMedications());
+        model.addAttribute("medication", medicationService.getMedicationById(id));
         return "medications";
     }
 
     @PostMapping("/update")
-    public String updateMedication(@RequestParam Long id, @RequestParam String name, @RequestParam String dosage, @RequestParam Long patientInfo) {
-        Medication medication = new Medication();
-        medication.setId(id);
-        medication.setName(name);
-        medication.setDosage(dosage);
-        medicationService.updateMedicationById(medication);
-        return "redirect:/medications";
+    public String updateMedication(@ModelAttribute("medication") Medication med) {
+      medicationService.updateMedicationById(med);
+      return "updatemedications";
     }
 
     @GetMapping("/delete/{id}")

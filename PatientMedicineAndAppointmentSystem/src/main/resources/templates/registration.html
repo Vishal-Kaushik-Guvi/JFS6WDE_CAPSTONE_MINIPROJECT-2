@@ -22,18 +22,27 @@
                         </div>
                     </div>
                     <form th:action="@{/registration}" method="post" th:object="${user}">
+                        
                         <div class="form-group">
                             <label for="patientname">Patient Name</label>
                             <input type="text" class="form-control" id="patientname" th:field="*{patientname}" required autocomplete="off">
                         </div>
+
                         <div class="form-group">
-                            <label for="contactInfo">Contact Details</label>
-                            <input type="text" class="form-control" id="contactInfo" th:field="*{contactInfo}" required autocomplete="off">
+                            <label for="contactinfo">Contact Details</label>
+                            <input type="text" class="form-control" id="contactinfo" th:field="*{contactinfo}" required autocomplete="off">
                         </div>
+                        
+                        <div class="form-group">
+                            <label for="email">email</label>
+                            <input type="email" class="form-control" id="email" th:field="*{email}" required autocomplete="off">
+                        </div>
+
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" class="form-control" id="password" th:field="*{password}" required autocomplete="off">
                         </div>
+
                         <button type="submit" class="btn btn-primary btn-block">Register</button>
                     </form>
                     <div class="text-center mt-3">

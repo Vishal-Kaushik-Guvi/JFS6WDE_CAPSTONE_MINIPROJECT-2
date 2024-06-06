@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/appointments")
 public class AppointmentController {
 
     @Autowired
@@ -23,13 +22,13 @@ public class AppointmentController {
         return "viewappointments";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/addAppointment")
     public String showAddAppointmentForm(Model model) {
         model.addAttribute("appointment", new AppointmentBooking());
         return "viewappointments";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/addAppointment")
     public String addAppointment(@ModelAttribute("appointment") AppointmentBooking appointmentBooking) {
         appointmentService.saveAppointmentBooking(appointmentBooking);
         return "redirect:/addappointments";

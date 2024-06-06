@@ -29,7 +29,7 @@ public class PatientInfo {
     private String patientname;
 
     @Column(name = "Contact_Info")
-    private String contactInfo;
+    private String contactinfo;
     
     @Column(name = "Medical_History")
     private String medicalHistory;
@@ -44,9 +44,9 @@ public class PatientInfo {
     @JoinColumn(name = "user_id")
     private PatientUser patientUser;
 
-    public PatientInfo(String patientName, String contactInfo) {
+    public PatientInfo(String patientName, String contactinfo) {
         this.patientname = patientName;
-        this.contactInfo = contactInfo;
+        this.contactinfo = contactinfo;
     }
     
 }

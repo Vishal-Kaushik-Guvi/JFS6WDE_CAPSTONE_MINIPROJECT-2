@@ -8,15 +8,18 @@ import lombok.NoArgsConstructor;
 public class PatientRegistration {
 
     private String patientname;
+    
+	private String email;
 
-    private String contactInfo;
+	private String contactinfo;
 
     private String password;
 
-	public PatientRegistration(String patientname, String contactInfo, String password) {
+	public PatientRegistration(String patientname, String contactinfo, String email, String password) {
 		super();
 		this.patientname = patientname;
-		this.contactInfo = contactInfo;
+		this.contactinfo = contactinfo;
+		this.email = email;
 		this.password = password;
 	}
     

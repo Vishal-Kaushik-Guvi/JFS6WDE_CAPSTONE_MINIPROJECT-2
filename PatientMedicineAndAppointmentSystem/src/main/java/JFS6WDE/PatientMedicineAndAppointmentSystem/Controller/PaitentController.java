@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -35,16 +36,10 @@ public class PaitentController {
         }
     }
 
-    @PostMapping("/patients/{id}/update")
-    public String updatePatient(@PathVariable Long id, PatientInfo updatedPatientInfo, Model model) {
-        try {
-            PatientInfo updatedPatient = patientService.updatePatientById(updatedPatientInfo);
-            model.addAttribute("patientInfo", updatedPatient);
-            return "patient-details";
-        } catch (ResourceNotFoundException ex) {
-            model.addAttribute("error", ex.getMessage());
-            return "error";
-        }
+    @PostMapping("/patientupdate/{id}")
+    public String updatePatient(@ModelAttribute("patient") PatientInfo info) {
+       patientService.updatePatientById(info);
+       return "updatepatient";
     }
 
 }

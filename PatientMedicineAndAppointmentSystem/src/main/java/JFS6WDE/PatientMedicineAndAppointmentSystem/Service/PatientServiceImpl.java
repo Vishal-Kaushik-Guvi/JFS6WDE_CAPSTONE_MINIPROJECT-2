@@ -36,7 +36,6 @@ public class PatientServiceImpl implements PatientService {
         return patientRepo.findAll();
     }
 
-
     @Override
     public PatientInfo updatePatientById(PatientInfo updatedPatientInfo) {
         Optional<PatientInfo> existingPatientOptional = patientRepo.findById(updatedPatientInfo.getId());
@@ -46,7 +45,7 @@ public class PatientServiceImpl implements PatientService {
             
             // Update the fields of the existing patient object
             existingPatient.setPatientname(updatedPatientInfo.getPatientname());
-            existingPatient.setContactInfo(updatedPatientInfo.getContactInfo());
+            existingPatient.setContactinfo(updatedPatientInfo.getContactinfo());
             existingPatient.setMedicalHistory(updatedPatientInfo.getMedicalHistory());
             
             // Save the updated patient object to the database
