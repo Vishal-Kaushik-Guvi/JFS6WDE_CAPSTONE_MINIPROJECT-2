@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 public class Registration {
 
 	@NotEmpty(message = "Patient Name Cannot be null")
-    private String patientname;
+    private String patientName;
 
     @Email
 	private String email;
 
 	@NotEmpty(message = "Phone no Cannot be null")
-	private String contactinfo;
+	private String contactInfo;
 
     @NotEmpty(message = "Password cannot be null")
     private String password;

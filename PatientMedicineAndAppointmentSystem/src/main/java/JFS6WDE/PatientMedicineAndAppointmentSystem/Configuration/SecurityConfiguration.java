@@ -9,7 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 import JFS6WDE.PatientMedicineAndAppointmentSystem.Service.UserService;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -37,10 +39,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/h2-console**", "/registration**", "/js/**", "/css/**", "/img/**")
-                        .permitAll()
+                        .requestMatchers("/h2-console/**", "/registration**", "/js/**", "/css/**", "/img/**").permitAll()
                         .requestMatchers("/login**").permitAll()
-                        .requestMatchers("/users").permitAll()
+                        .requestMatchers("/users**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")

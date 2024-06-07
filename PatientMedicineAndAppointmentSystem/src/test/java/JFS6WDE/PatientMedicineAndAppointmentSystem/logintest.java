@@ -41,8 +41,8 @@ public class logintest {
     @BeforeEach
     public void setUp() {
         registrationDto = new Registration();
-        registrationDto.setPatientname("John Doe");
-        registrationDto.setContactinfo("1234567890");
+        registrationDto.setPatientName("John Doe");
+        registrationDto.setContactInfo("1234567890");
         registrationDto.setEmail("john@example.com");
         registrationDto.setPassword("password123");
     }
@@ -62,8 +62,8 @@ public class logintest {
         // Assertions
         assertNotNull(savedUser);
         assertNotNull(savedUser.getPatientInfo());
-        assertEquals("John Doe", savedUser.getPatientname());
-        assertEquals("1234567890", savedUser.getContactinfo());
+        assertEquals("John Doe", savedUser.getPatientName());
+        assertEquals("1234567890", savedUser.getContactInfo());
         assertEquals("john@example.com", savedUser.getEmail());
         assertEquals("encodedPassword", savedUser.getPassword());
 

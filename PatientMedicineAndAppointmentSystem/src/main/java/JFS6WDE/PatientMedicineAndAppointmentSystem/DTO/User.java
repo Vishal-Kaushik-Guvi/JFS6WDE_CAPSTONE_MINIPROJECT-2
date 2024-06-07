@@ -1,6 +1,5 @@
 package JFS6WDE.PatientMedicineAndAppointmentSystem.DTO;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,30 +15,30 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false)
-    private String patientname;
+    private String patientName;
  
     @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
-    private String contactinfo;
+    private String contactInfo;
      
     private String password;
 
@@ -50,15 +49,14 @@ public class User {
     inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles = new ArrayList<>();
 
-    @OneToOne(mappedBy = "patientUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private PatientInfo patientInfo;
 
     public User(String patientName, String email, String contactInfo, String password, List<Role> roles) {
-        this.patientname = patientName;
-        this.contactinfo = contactInfo;
+        this.patientName = patientName;
+        this.contactInfo = contactInfo;
         this.email = email;
         this.password = password;
         this.roles = roles;
     }
-  
 }

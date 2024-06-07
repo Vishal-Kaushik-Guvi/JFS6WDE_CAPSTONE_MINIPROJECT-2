@@ -52,7 +52,7 @@ public class RegistrationController {
 
     @GetMapping("/users")
     public String users(Model model){
-        List<Registration> users = userService.findAllUsers();
+        List<Registration> users = userService.findAllUser();
         model.addAttribute("users", users);
         return "users";
     }

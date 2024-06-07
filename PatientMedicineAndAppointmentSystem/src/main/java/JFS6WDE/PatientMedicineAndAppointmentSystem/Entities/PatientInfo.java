@@ -26,10 +26,10 @@ public class PatientInfo {
     private Long id;
 
     @Column(name = "Patient_Name")
-    private String patientname;
+    private String patientName;
 
     @Column(name = "Contact_Info")
-    private String contactinfo;
+    private String contactInfo;
     
     @Column(name = "Medical_History")
     private String medicalHistory;
@@ -42,11 +42,10 @@ public class PatientInfo {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User patientUser;
+    private User user;
 
     public PatientInfo(String patientName, String contactinfo) {
-        this.patientname = patientName;
-        this.contactinfo = contactinfo;
+        this.patientName = patientName;
+        this.contactInfo = contactinfo;
     }
-    
 }

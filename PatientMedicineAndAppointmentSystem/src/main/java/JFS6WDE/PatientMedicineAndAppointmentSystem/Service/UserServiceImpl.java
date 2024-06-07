@@ -1,5 +1,6 @@
 package JFS6WDE.PatientMedicineAndAppointmentSystem.Service;
 
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -38,10 +39,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(Registration registrationDto) {
-        User patientuser = new User(
-                registrationDto.getPatientname(),
+        User patientUser = new User(
+                registrationDto.getPatientName(),
                 registrationDto.getEmail(),
-                registrationDto.getContactinfo(),
+                registrationDto.getContactInfo(),
                 passwordEncoder.encode(registrationDto.getPassword()),
                 Arrays.asList(new Role()));
 
@@ -49,40 +50,43 @@ public class UserServiceImpl implements UserService {
         if (role == null) {
             role = checkRoleExist();
         }
-        patientuser.setRoles(Arrays.asList(role));
+        patientUser.setRoles(Arrays.asList(role));
 
         PatientInfo patientInfo = new PatientInfo(
-                registrationDto.getPatientname(),
-                registrationDto.getContactinfo());
+                registrationDto.getPatientName(),
+                registrationDto.getContactInfo());
 
-        patientuser.setPatientInfo(patientInfo);
-        patientInfo.setPatientUser(patientuser);
+        patientUser.setPatientInfo(patientInfo);
+        patientInfo.setUser(patientUser);
 
-        userRepo.save(patientuser);
+        userRepo.save(patientUser);
         infoRepo.save(patientInfo);
 
-        return patientuser;
+        return patientUser;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepo.findByEmail(email);
+        try {
+            User user = userRepo.findByEmail(email);
 
-        if (user != null) {
-            return new org.springframework.security.core.userdetails.User(
-                    user.getEmail(),
-                    user.getPassword(),
-                    mapRolesToAuthorities(user.getRoles()));
-        } else {
-            throw new UsernameNotFoundException("Invalid username or password.");
+            if (user != null) {
+                return new org.springframework.security.core.userdetails.User(
+                        user.getEmail(),
+                        user.getPassword(),
+                        mapRolesToAuthorities(user.getRoles()));
+            } else {
+                throw new UsernameNotFoundException("Invalid username or password.");
+            }
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("Error occurred while fetching user details.");
         }
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {
-        Collection<? extends GrantedAuthority> mapRoles = roles.stream()
+        return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRole()))
                 .collect(Collectors.toList());
-        return mapRoles;
     }
 
     @Override
@@ -91,7 +95,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Registration> findAllUsers() {
+    public List<Registration> findAllUser() {
         List<User> users = userRepo.findAll();
         return users.stream()
                 .map((user) -> maptoRegistration(user))
@@ -100,9 +104,11 @@ public class UserServiceImpl implements UserService {
 
     private Registration maptoRegistration(User user) {
         Registration userDto = new Registration();
-        String[] str = user.getPatientname().split(" ");
-        userDto.setPatientname(str[0]);
-        userDto.setContactinfo(str[1]);
+        String[] nameParts = user.getPatientName().split(" ");
+        userDto.setPatientName(nameParts[0]);
+        if (nameParts.length > 1) {
+            userDto.setContactInfo(nameParts[1]);
+        }
         userDto.setEmail(user.getEmail());
         return userDto;
     }
@@ -113,3 +119,4 @@ public class UserServiceImpl implements UserService {
         return roleRepo.save(role);
     }
 }
+

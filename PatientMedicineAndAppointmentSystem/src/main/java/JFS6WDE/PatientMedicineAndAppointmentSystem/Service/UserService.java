@@ -8,9 +8,10 @@ import JFS6WDE.PatientMedicineAndAppointmentSystem.DTO.Registration;
 import JFS6WDE.PatientMedicineAndAppointmentSystem.DTO.User;
 
 public interface UserService extends UserDetailsService {
+	
  User save(Registration patientRegistration);
 
  User findUserByEmail(String email);
 
- List<Registration> findAllUsers();
+ List<Registration> findAllUser();
 }
